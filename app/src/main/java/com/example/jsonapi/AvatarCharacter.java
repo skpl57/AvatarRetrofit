@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class AvatarCharacters {
+public class AvatarCharacter {
     @SerializedName("_id")
     private String id;
     private String name;
