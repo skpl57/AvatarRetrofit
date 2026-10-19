@@ -26,8 +26,8 @@ public class AvatarCharacter implements Serializable {
         return
                 "Imię: " + name +
 //                ", photoUrl='" + photoUrl + '\'' +
-                "\nNacja: " + affiliation +
-                "\nKompani: " + allies +
-                "\nWrogowie:" + enemies;
+                "\nPrzynależność: " + affiliation +
+                "\nKompan: " +  allies.get(0) +
+                "\nWróg: " + enemies.get(0);
     }
 }

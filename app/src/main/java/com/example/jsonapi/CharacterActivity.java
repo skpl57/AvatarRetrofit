@@ -35,6 +35,5 @@ public class CharacterActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(arrayAdapter);
-
     }
 }

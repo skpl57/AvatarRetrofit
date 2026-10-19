@@ -22,4 +22,10 @@ public interface AvatarApi {
     Call<List<AvatarCharacter>> getCharacterByName(
             @Query("name") String name
     );
+
+    @GET("api/v1/characters")
+    Call<List<AvatarCharacter>> getCharacterByAffiliation(
+            @Query("affiliation") String affiliation
+    );
+
 }
