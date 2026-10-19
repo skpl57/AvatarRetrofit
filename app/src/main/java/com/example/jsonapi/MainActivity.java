@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Button affiliationBTN;
 
     private EditText characterName;
+    private RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
         randomBTN = findViewById(R.id.randomBTN);
         affiliationBTN = findViewById(R.id.affiliationBTN);
         characterName = findViewById(R.id.nameOfCharacter);
-
-
-
+        radioGroup = findViewById(R.id.radioGroup);
 
         randomBTN.setOnClickListener(
                 v -> {
@@ -70,9 +70,11 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     avatarCharactersList = (ArrayList<AvatarCharacter>) response.body();
 
-                                    Intent intent = new Intent(MainActivity.this, CharacterActivity.class);
-                                    intent.putExtra("LIST_OF_CHARACTERS", avatarCharactersList);
-                                    startActivity(intent);
+                                    if(!avatarCharactersList.isEmpty()){
+                                        Intent intent = new Intent(MainActivity.this, CharacterActivity.class);
+                                        intent.putExtra("LIST_OF_CHARACTERS", avatarCharactersList);
+                                        startActivity(intent);
+                                    }
                                 }
 
                                 @Override
@@ -86,11 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         searchBTN.setOnClickListener(
                 v -> {
-
-
-
-                    Call<List<AvatarCharacter>> randomCall = avatarApi.getRandomCharacters(1);
-
+                    Call<List<AvatarCharacter>> randomCall = avatarApi.getCharacterByName(characterName.getText().toString());
+                    characterName.setText("");
                     randomCall.enqueue(
                             new Callback<List<AvatarCharacter>>() {
                                 @Override
@@ -101,9 +100,11 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     avatarCharactersList = (ArrayList<AvatarCharacter>) response.body();
 
-                                    Intent intent = new Intent(MainActivity.this, CharacterActivity.class);
-                                    intent.putExtra("LIST_OF_CHARACTERS", avatarCharactersList);
-                                    startActivity(intent);
+                                    if(!avatarCharactersList.isEmpty()){
+                                        Intent intent = new Intent(MainActivity.this, CharacterActivity.class);
+                                        intent.putExtra("LIST_OF_CHARACTERS", avatarCharactersList);
+                                        startActivity(intent);
+                                    }
                                 }
 
                                 @Override
@@ -117,29 +118,36 @@ public class MainActivity extends AppCompatActivity {
 
         affiliationBTN.setOnClickListener(
                 v -> {
-                    Call<List<AvatarCharacter>> randomCall = avatarApi.getRandomCharacters(1);
 
-                    randomCall.enqueue(
-                            new Callback<List<AvatarCharacter>>() {
-                                @Override
-                                public void onResponse(Call<List<AvatarCharacter>> call, Response<List<AvatarCharacter>> response) {
-                                    if(!response.isSuccessful()){
-                                        Log.e("AvatarApp", "Błąd połączenia: " + response.code());
-                                        return;
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    RadioButton selectedRadioButton = findViewById(selectedId);
+                    String affilation = selectedRadioButton.getHint().toString();
+                    if (selectedId != -1) {
+                        Call<List<AvatarCharacter>> affiliationCall = avatarApi.getCharacterByAffiliation(affilation);
+                        affiliationCall.enqueue(
+                                new Callback<List<AvatarCharacter>>() {
+                                    @Override
+                                    public void onResponse(Call<List<AvatarCharacter>> call, Response<List<AvatarCharacter>> response) {
+                                        if(!response.isSuccessful()){
+                                            Log.e("AvatarApp", "Błąd połączenia: " + response.code());
+                                            return;
+                                        }
+                                        avatarCharactersList = (ArrayList<AvatarCharacter>) response.body();
+                                        if(!avatarCharactersList.isEmpty()){
+                                            Intent intent = new Intent(MainActivity.this, CharacterActivity.class);
+                                            intent.putExtra("LIST_OF_CHARACTERS", avatarCharactersList);
+                                            startActivity(intent);
+                                        }
+
                                     }
-                                    avatarCharactersList = (ArrayList<AvatarCharacter>) response.body();
 
-                                    Intent intent = new Intent(MainActivity.this, CharacterActivity.class);
-                                    intent.putExtra("LIST_OF_CHARACTERS", avatarCharactersList);
-                                    startActivity(intent);
+                                    @Override
+                                    public void onFailure(Call<List<AvatarCharacter>> call, Throwable t) {
+                                        Log.e("AvatarApp", "Błąd połączenia: " + t.getMessage());
+                                    }
                                 }
-
-                                @Override
-                                public void onFailure(Call<List<AvatarCharacter>> call, Throwable t) {
-                                    Log.e("AvatarApp", "Błąd połączenia: " + t.getMessage());
-                                }
-                            }
-                    );
+                        );
+                    }
                 }
         );
     }

@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:textSize="24sp"
+        android:layout_margin="16dp"
+        android:textSize="28sp"
         android:textColor="@color/black"
         android:text="Avatar Legenda Aanga" />
 
@@ -62,19 +62,23 @@
 
                 <RadioButton
                     android:text="Plemie Wody"
+                    android:hint="Water"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <RadioButton
                     android:text="Królestwo Ziemi"
+                    android:hint="Earth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <RadioButton
                     android:text="Naród ognia"
+                    android:hint="Fire"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
                 <RadioButton
                     android:text="Nomadzi Powietrza"
+                    android:hint="Air"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />

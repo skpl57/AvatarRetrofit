@@ -1,7 +1,6 @@
 package com.example.jsonapi;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -29,9 +28,7 @@ public class CharacterActivity extends AppCompatActivity {
             return insets;
         });
         ArrayList<AvatarCharacter> avatarCharacterList = (ArrayList<AvatarCharacter>) getIntent().getSerializableExtra("LIST_OF_CHARACTERS");
-        Log.d("AVATAR", avatarCharacterList.get(0).getName() + "");
-
-        ArrayAdapter<AvatarCharacter> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1 ,avatarCharacterList);
+        ArrayAdapter<AvatarCharacter> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1 , avatarCharacterList);
 
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(arrayAdapter);

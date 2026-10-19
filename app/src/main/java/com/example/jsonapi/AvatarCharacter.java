@@ -24,10 +24,10 @@ public class AvatarCharacter implements Serializable {
     @Override
     public String toString() {
         return
-                "Imię: " + name +
+                "\nImię: " + name +
 //                ", photoUrl='" + photoUrl + '\'' +
                 "\nPrzynależność: " + affiliation +
-                "\nKompan: " +  allies.get(0) +
-                "\nWróg: " + enemies.get(0);
+                "\nKompan: " +  allies +
+                "\nWróg: " + enemies + "\n";
     }
 }
