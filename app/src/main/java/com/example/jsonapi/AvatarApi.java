@@ -17,4 +17,9 @@ public interface AvatarApi {
     Call<List<AvatarCharacter>> getRandomCharacters(
             @Query("count") int count
     );
+
+    @GET("api/v1/characters")
+    Call<List<AvatarCharacter>> getCharacterByName(
+            @Query("name") String name
+    );
 }
